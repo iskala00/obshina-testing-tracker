@@ -65,6 +65,16 @@
 	outline-offset: 0;
 	box-shadow: none;
 }
+.run-summary-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+.run-summary-row > button {
+	flex: none;
+	white-space: nowrap;
+}
 .run-summary {
 	display: flex;
 	align-items: center;
@@ -283,11 +293,8 @@
 .run-tools {
 	margin-inline: calc(12px * var(--collapse));
 	padding: calc(16px - 8px * var(--collapse)) calc(22px - 8px * var(--collapse));
-	gap: calc(14px - 6px * var(--collapse));
-	border-radius: calc(24px - 6px * var(--collapse));
-}
-.run-tools:not(:has(.run-filters > button)) {
 	row-gap: calc(14px * (1 - var(--collapse)));
+	border-radius: calc(24px - 6px * var(--collapse));
 }
 .run-summary {
 	gap: calc(20px - 8px * var(--collapse));

@@ -306,7 +306,21 @@ function Checklist({
 				</SearchField>
 			</section>
 			<div className="run-tools">
-				{stats.data && <Summary counts={stats.data} />}
+				{stats.data && (
+					<div className="run-summary-row">
+						<Summary counts={stats.data} />
+						{category && stats.data.pending > 0 && (
+							<Button
+								variant="secondary"
+								size="sm"
+								onPress={() => setClosing(category)}
+							>
+								<CheckCheck size={15} />
+								Закрыть категорию
+							</Button>
+						)}
+					</div>
+				)}
 				<div className="run-filters">
 					<Tabs
 						selectedKey={filter}
@@ -323,12 +337,6 @@ function Checklist({
 							</Tabs.List>
 						</Tabs.ListContainer>
 					</Tabs>
-					{category && !!stats.data?.pending && (
-						<Button variant="secondary" size="sm" onPress={() => setClosing(category)}>
-							<CheckCheck size={15} />
-							Закрыть категорию
-						</Button>
-					)}
 				</div>
 			</div>
 			{(stats.error || header.error || quickMark.error) && (
