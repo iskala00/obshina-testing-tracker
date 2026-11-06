@@ -1,5 +1,20 @@
-.check-dialog-wrap {
+.check-dialog {
+	padding: 0;
 	max-height: min(85dvh, 850px);
+	overflow: hidden;
+}
+.check-scrollport {
+	min-height: 0;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+}
+.check-scroll-content {
+	position: relative;
+	padding: 24px;
+}
+.check-scroll-content > .modal__body {
+	overflow: visible;
 }
 .check-dialog .modal__header {
 	align-items: flex-start;

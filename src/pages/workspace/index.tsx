@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { create } from 'zustand';
-import { Clock3, Grid2X2, ListChecks, PanelLeft, Plus, RotateCw } from 'lucide-react';
+import { Clock3, Grid2X2, ListChecks, Plus, RotateCw } from 'lucide-react';
 import { Button } from '@iskala00/react/heroui';
 import type { Check } from '@/entities/check';
 import { CheckDetail } from '@/widgets/check/show';
@@ -47,10 +47,8 @@ export function Workspace({ live }: { live: boolean }) {
 	const section = useNavigation((state) => state.section);
 	const runId = useRunSelection((state) => state.runId);
 	const client = useQueryClient();
-	const [sidebar, setSidebar] = useState(true);
 
 	function newRun() {
-		setSidebar(true);
 		navigate('runs');
 		requestNewRun();
 	}
@@ -76,18 +74,8 @@ export function Workspace({ live }: { live: boolean }) {
 	useEffect(() => () => navigate('runs'), []);
 
 	return (
-		<div className={`workspace ${sidebar ? '' : 'sidebar-hidden'}`}>
+		<div className="workspace">
 			<header className="workspace-tools" data-tauri-drag-region>
-				<Button
-					isIconOnly
-					variant="ghost"
-					size="sm"
-					aria-label="Боковая панель"
-					aria-pressed={sidebar}
-					onPress={() => setSidebar(!sidebar)}
-				>
-					<PanelLeft size={17} />
-				</Button>
 				<div className="tool-group">
 					<Button
 						isIconOnly
@@ -109,7 +97,7 @@ export function Workspace({ live }: { live: boolean }) {
 					</Button>
 				</div>
 			</header>
-			<aside className="workspace-sidebar" hidden={!sidebar}>
+			<aside className="workspace-sidebar">
 				<CommunityBrand />
 				<p className="greeting">Привет, {name}</p>
 				<nav aria-label="Разделы приложения">

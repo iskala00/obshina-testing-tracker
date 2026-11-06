@@ -188,6 +188,61 @@ interface RunViewProps {
 	onOpenCheck: (item: Check) => void;
 }
 
+function useScrollCollapse() {
+	const viewport = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const view = viewport.current;
+		if (!view) {
+			return;
+		}
+
+		const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		let progress = 0;
+		let target = 0;
+		let frame = 0;
+		let previousTime = 0;
+
+		function paint(time: number) {
+			const elapsed = Math.max(1, time - previousTime);
+			previousTime = time;
+			progress += (target - progress) * (1 - Math.exp(-elapsed / 70));
+			if (motion.matches || Math.abs(target - progress) < 0.002) {
+				progress = target;
+			}
+
+			view!.style.setProperty('--collapse', String(progress));
+			view!.dataset.compact = String(progress === 1);
+			frame = progress === target ? 0 : requestAnimationFrame(paint);
+		}
+
+		function followScroll() {
+			const offset = view!.scrollTop;
+			view!.toggleAttribute('data-scrolled', offset > 0);
+
+			const fraction = Math.min(1, Math.max(0, offset / 144));
+			target = motion.matches
+				? Number(fraction === 1)
+				: fraction * fraction * (3 - 2 * fraction);
+			if (!frame) {
+				previousTime = performance.now();
+				frame = requestAnimationFrame(paint);
+			}
+		}
+
+		followScroll();
+		view.addEventListener('scroll', followScroll, { passive: true });
+		motion.addEventListener('change', followScroll);
+		return () => {
+			cancelAnimationFrame(frame);
+			view.removeEventListener('scroll', followScroll);
+			motion.removeEventListener('change', followScroll);
+		};
+	}, []);
+
+	return viewport;
+}
+
 function Checklist({
 	id,
 	category,
@@ -196,8 +251,7 @@ function Checklist({
 	const [search, setSearch] = useState('');
 	const [queryText, setQueryText] = useState('');
 	const [filter, setFilter] = useState<Filter>('ALL');
-	const [compact, setCompact] = useState(false);
-	const viewport = useRef<HTMLDivElement>(null);
+	const viewport = useScrollCollapse();
 	const [closing, setClosing] = useState<string | null>(null);
 	const header = useQuery({
 		queryKey: ['runs', id, 'header'],
@@ -217,23 +271,10 @@ function Checklist({
 
 	useEffect(() => {
 		viewport.current?.scrollTo({ top: 0 });
-		setCompact(false);
 	}, [category, filter, queryText]);
 
 	return (
-		<div
-			className="run-view"
-			ref={viewport}
-			data-compact={compact}
-			onScroll={(event) => {
-				const top = event.currentTarget.scrollTop;
-				if (top > 72 && !compact) {
-					setCompact(true);
-				} else if (top < 16 && compact) {
-					setCompact(false);
-				}
-			}}
-		>
+		<div className="run-view" ref={viewport}>
 			<section className="run-heading">
 				<div>
 					{header.data && (

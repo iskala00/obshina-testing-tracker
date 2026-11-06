@@ -275,13 +275,11 @@ textarea {
 }
 
 .workspace {
+	--workspace-toolbar-height: 44px;
 	height: 100%;
 	display: grid;
 	grid-template-columns: clamp(215px, 22%, 290px) minmax(0, 1fr);
-	grid-template-rows: 44px minmax(0, 1fr);
-}
-.workspace.sidebar-hidden {
-	grid-template-columns: 0 minmax(0, 1fr);
+	grid-template-rows: var(--workspace-toolbar-height) minmax(0, 1fr);
 }
 .workspace-tools {
 	grid-column: 1 / -1;
@@ -289,7 +287,7 @@ textarea {
 	z-index: 4;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-end;
 	padding: 3px 14px 3px 12px;
 	pointer-events: auto;
 }
@@ -303,6 +301,12 @@ textarea {
 	background: var(--glass-fill);
 	border: 1px solid var(--border);
 	border-radius: 999px;
+}
+.workspace:has(.run-view[data-scrolled]) .workspace-tools {
+	pointer-events: none;
+}
+.workspace:has(.run-view[data-scrolled]) .tool-group {
+	display: none;
 }
 .tool-group button {
 	min-width: 30px;
@@ -319,9 +323,6 @@ textarea {
 	background: var(--sidebar-fill);
 	border-right: 1px solid var(--border);
 	backdrop-filter: blur(18px);
-}
-.workspace-sidebar[hidden] {
-	display: none;
 }
 .workspace-sidebar > .community-brand {
 	margin: 0 3px;

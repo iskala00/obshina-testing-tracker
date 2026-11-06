@@ -103,167 +103,200 @@ export function CheckDetail({ initial, onClose }: { initial: Check; onClose: () 
 					}
 				}}
 			>
-				<Modal.Container className="check-dialog-wrap" scroll="inside" size="lg">
+				<Modal.Container scroll="inside" size="lg">
 					<Modal.Dialog className="check-dialog">
-						<Modal.CloseTrigger aria-label="Закрыть карточку" />
-						<Modal.Header>
-							<p className="check-path">{item.category.split('/').join(' › ')}</p>
-							<Modal.Heading>{item.title}</Modal.Heading>
-							<Dropdown>
-								<Button
-									size="sm"
-									variant="tertiary"
-									isDisabled={mark.isPending}
-									aria-label={`Результат проверки: ${statusTitle[item.status]}`}
-								>
-									{statusTitle[item.status]} <ChevronDown size={13} />
-								</Button>
-								<Dropdown.Popover>
-									<Dropdown.Menu
-										aria-label="Результат проверки"
-										disabledKeys={[item.status]}
-										onAction={(key) => changeStatus(key as CheckStatus)}
+						<div className="check-scrollport">
+							<div className="check-scroll-content">
+								<Modal.CloseTrigger aria-label="Закрыть карточку" />
+								<Modal.Header>
+									<p className="check-path">
+										{item.category.split('/').join(' › ')}
+									</p>
+									<Modal.Heading>{item.title}</Modal.Heading>
+									<Dropdown>
+										<Button
+											size="sm"
+											variant="tertiary"
+											isDisabled={mark.isPending}
+											aria-label={`Результат проверки: ${statusTitle[item.status]}`}
+										>
+											{statusTitle[item.status]} <ChevronDown size={13} />
+										</Button>
+										<Dropdown.Popover>
+											<Dropdown.Menu
+												aria-label="Результат проверки"
+												disabledKeys={[item.status]}
+												onAction={(key) => changeStatus(key as CheckStatus)}
+											>
+												{Object.entries(statusTitle).map(([key, title]) => (
+													<Dropdown.Item key={key} id={key}>
+														{title}
+													</Dropdown.Item>
+												))}
+											</Dropdown.Menu>
+										</Dropdown.Popover>
+									</Dropdown>
+								</Modal.Header>
+								<Modal.Body>
+									<dl className="check-instructions">
+										<dt>Как проверить</dt>
+										<dd>{item.steps}</dd>
+										<dt>Ожидаемый результат</dt>
+										<dd>{item.expected}</dd>
+									</dl>
+									<Tabs
+										selectedKey={thread}
+										onSelectionChange={(key) => setThread(key as EntryKind)}
 									>
-										{Object.entries(statusTitle).map(([key, title]) => (
-											<Dropdown.Item key={key} id={key}>
-												{title}
-											</Dropdown.Item>
-										))}
-									</Dropdown.Menu>
-								</Dropdown.Popover>
-							</Dropdown>
-						</Modal.Header>
-						<Modal.Body>
-							<dl className="check-instructions">
-								<dt>Как проверить</dt>
-								<dd>{item.steps}</dd>
-								<dt>Ожидаемый результат</dt>
-								<dd>{item.expected}</dd>
-							</dl>
-							<Tabs
-								selectedKey={thread}
-								onSelectionChange={(key) => setThread(key as EntryKind)}
-							>
-								<Tabs.ListContainer>
-									<Tabs.List aria-label="Записи проверки">
-										<Tabs.Tab id="defect">
-											Ошибки · {item.defectCount}
-											<Tabs.Indicator />
-										</Tabs.Tab>
-										<Tabs.Tab id="comment">
-											Обсуждение · {item.commentCount}
-											<Tabs.Indicator />
-										</Tabs.Tab>
-									</Tabs.List>
-								</Tabs.ListContainer>
-							</Tabs>
-							{thread === 'defect' ? (
-								<div className="thread-pane">
-									<Button
-										size="sm"
-										variant="danger-soft"
-										onPress={() => setEditor({ kind: 'defect' })}
-									>
-										<Plus size={15} />
-										Добавить ошибку
-									</Button>
-									<ScrollFeed<Defect>
-										queryKey={['checks', id, 'defects']}
-										getKey={(entry) => entry.id}
-										loadPage={(after, signal) => defectPage(id, after, signal)}
-										empty={
-											item.status === 'FAILED' && item.error ? (
-												<p className="entry-body">{item.error}</p>
-											) : (
-												<p className="thread-muted">Ошибок пока нет</p>
-											)
-										}
-									>
-										{(entry) => (
-											<article className="thread-record">
-												<header>
-													<strong
-														className={
-															entry.resolvedAt
-																? 'thread-muted'
-																: 'count-danger'
-														}
-													>
-														{entry.resolvedAt ? (
-															<CircleCheck />
-														) : (
-															<TriangleAlert />
+										<Tabs.ListContainer>
+											<Tabs.List aria-label="Записи проверки">
+												<Tabs.Tab id="defect">
+													Ошибки · {item.defectCount}
+													<Tabs.Indicator />
+												</Tabs.Tab>
+												<Tabs.Tab id="comment">
+													Обсуждение · {item.commentCount}
+													<Tabs.Indicator />
+												</Tabs.Tab>
+											</Tabs.List>
+										</Tabs.ListContainer>
+									</Tabs>
+									{thread === 'defect' ? (
+										<div className="thread-pane">
+											<Button
+												size="sm"
+												variant="danger-soft"
+												onPress={() => setEditor({ kind: 'defect' })}
+											>
+												<Plus size={15} />
+												Добавить ошибку
+											</Button>
+											<ScrollFeed<Defect>
+												queryKey={['checks', id, 'defects']}
+												getKey={(entry) => entry.id}
+												loadPage={(after, signal) =>
+													defectPage(id, after, signal)
+												}
+												empty={
+													item.status === 'FAILED' && item.error ? (
+														<p className="entry-body">{item.error}</p>
+													) : (
+														<p className="thread-muted">
+															Ошибок пока нет
+														</p>
+													)
+												}
+											>
+												{(entry) => (
+													<article className="thread-record">
+														<header>
+															<strong
+																className={
+																	entry.resolvedAt
+																		? 'thread-muted'
+																		: 'count-danger'
+																}
+															>
+																{entry.resolvedAt ? (
+																	<CircleCheck />
+																) : (
+																	<TriangleAlert />
+																)}
+																{entry.resolvedAt
+																	? 'Закрыта'
+																	: 'Открыта'}
+															</strong>
+															<time dateTime={entry.createdAt}>
+																{displayDate(entry.createdAt)}
+															</time>
+															<EntryMenu
+																edit={() =>
+																	setEditor({
+																		kind: 'defect',
+																		entry,
+																	})
+																}
+																remove={() =>
+																	openDeletion({
+																		kind: 'defect',
+																		entry,
+																	})
+																}
+															/>
+														</header>
+														<p className="entry-body">{entry.body}</p>
+														{entry.resolvedAt && (
+															<small>
+																Закрыта{' '}
+																{displayDate(entry.resolvedAt)}
+															</small>
 														)}
-														{entry.resolvedAt ? 'Закрыта' : 'Открыта'}
-													</strong>
-													<time dateTime={entry.createdAt}>
-														{displayDate(entry.createdAt)}
-													</time>
-													<EntryMenu
-														edit={() =>
-															setEditor({ kind: 'defect', entry })
-														}
-														remove={() =>
-															openDeletion({ kind: 'defect', entry })
-														}
-													/>
-												</header>
-												<p className="entry-body">{entry.body}</p>
-												{entry.resolvedAt && (
-													<small>
-														Закрыта {displayDate(entry.resolvedAt)}
-													</small>
+													</article>
 												)}
-											</article>
-										)}
-									</ScrollFeed>
-								</div>
-							) : (
-								<div className="thread-pane">
-									<EntryForm kind="comment" itemId={id} />
-									<ScrollFeed<CheckComment>
-										queryKey={['checks', id, 'comments']}
-										getKey={(entry) => entry.id}
-										loadPage={(after, signal) => commentPage(id, after, signal)}
-									>
-										{(entry) => (
-											<article className="thread-record">
-												<header>
-													<strong>
-														<CircleUserRound />
-														{entry.author?.trim() || 'Автор не указан'}
-													</strong>
-													<EntryMenu
-														edit={() =>
-															setEditor({ kind: 'comment', entry })
-														}
-														remove={() =>
-															openDeletion({ kind: 'comment', entry })
-														}
-													/>
-												</header>
-												<time dateTime={entry.createdAt}>
-													{displayDate(entry.createdAt)}
-													{entry.createdAt !== entry.updatedAt && (
-														<span title={displayDate(entry.updatedAt)}>
-															{' '}
-															· изменено
-														</span>
-													)}
-												</time>
-												<p className="entry-body">{entry.body}</p>
-											</article>
-										)}
-									</ScrollFeed>
-								</div>
-							)}
-							{(query.error ?? mark.error) && (
-								<p role="alert">{(query.error ?? mark.error)?.message}</p>
-							)}
-						</Modal.Body>
-						<Modal.Footer>
-							<Button onPress={onClose}>Готово</Button>
-						</Modal.Footer>
+											</ScrollFeed>
+										</div>
+									) : (
+										<div className="thread-pane">
+											<EntryForm kind="comment" itemId={id} />
+											<ScrollFeed<CheckComment>
+												queryKey={['checks', id, 'comments']}
+												getKey={(entry) => entry.id}
+												loadPage={(after, signal) =>
+													commentPage(id, after, signal)
+												}
+											>
+												{(entry) => (
+													<article className="thread-record">
+														<header>
+															<strong>
+																<CircleUserRound />
+																{entry.author?.trim() ||
+																	'Автор не указан'}
+															</strong>
+															<EntryMenu
+																edit={() =>
+																	setEditor({
+																		kind: 'comment',
+																		entry,
+																	})
+																}
+																remove={() =>
+																	openDeletion({
+																		kind: 'comment',
+																		entry,
+																	})
+																}
+															/>
+														</header>
+														<time dateTime={entry.createdAt}>
+															{displayDate(entry.createdAt)}
+															{entry.createdAt !==
+																entry.updatedAt && (
+																<span
+																	title={displayDate(
+																		entry.updatedAt,
+																	)}
+																>
+																	{' '}
+																	· изменено
+																</span>
+															)}
+														</time>
+														<p className="entry-body">{entry.body}</p>
+													</article>
+												)}
+											</ScrollFeed>
+										</div>
+									)}
+									{(query.error ?? mark.error) && (
+										<p role="alert">{(query.error ?? mark.error)?.message}</p>
+									)}
+								</Modal.Body>
+								<Modal.Footer>
+									<Button onPress={onClose}>Готово</Button>
+								</Modal.Footer>
+							</div>
+						</div>
 					</Modal.Dialog>
 				</Modal.Container>
 			</Modal.Backdrop>
