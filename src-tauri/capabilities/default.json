@@ -1,0 +1,16 @@
+{
+    "$schema": "../gen/schemas/desktop-schema.json",
+    "identifier": "main-window",
+    "description": "The local tracker window can access its own secure storage and the team GraphQL endpoint.",
+    "windows": ["main"],
+    "permissions": [
+        "allow-keychain-get",
+        "allow-keychain-set",
+        "allow-keychain-delete",
+        "core:window:allow-start-dragging",
+        {
+            "identifier": "http:default",
+            "allow": [{ "url": "https://checker.obshina.skalaspace.top/graphql" }]
+        }
+    ]
+}

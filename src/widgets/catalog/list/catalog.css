@@ -1,0 +1,189 @@
+.catalog-view {
+	width: 100%;
+	max-width: 70rem;
+	margin-inline: auto;
+	padding: clamp(1.15rem, 3vw, 2.5rem);
+}
+
+.catalog-heading h1 {
+	margin: 0;
+	font-size: clamp(1.75rem, 3vw, 2.25rem);
+	letter-spacing: -0.045em;
+	line-height: 1.15;
+	font-weight: 720;
+	overflow-wrap: anywhere;
+}
+
+.catalog-heading p,
+.catalog-empty,
+.catalog-dialog-description,
+.catalog-notice {
+	margin: 0.5rem 0;
+	font-size: 0.9rem;
+	line-height: 1.5;
+	color: var(--muted);
+	overflow-wrap: anywhere;
+}
+
+.catalog-actions,
+.catalog-included {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-block: 1.15rem;
+}
+
+.catalog-back {
+	margin: 0 0 0.8rem -0.45rem;
+}
+
+.catalog-included {
+	width: fit-content;
+	padding: 0.35rem 0.6rem;
+	border: 1px solid var(--border);
+	border-radius: 0.75rem;
+	background: var(--surface);
+	font-size: 0.85rem;
+}
+
+.catalog-included > svg {
+	color: var(--accent);
+}
+
+.catalog-section-title {
+	margin: 1.45rem 0 0.65rem;
+	font-size: 1rem;
+	letter-spacing: -0.015em;
+	font-weight: 650;
+}
+
+.catalog-folder-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+	gap: 0.65rem;
+	padding-bottom: 0.65rem;
+}
+
+.catalog-folder {
+	display: flex;
+	align-items: center;
+	gap: 0.72rem;
+	min-width: 0;
+	min-height: 3.75rem;
+	padding: 0.67rem 0.82rem;
+	border: 1px solid var(--border);
+	border-radius: 0.95rem;
+	background: color-mix(in srgb, var(--surface) 84%, transparent);
+	color: inherit;
+	font: inherit;
+	font-size: 0.9rem;
+	font-weight: 570;
+	text-align: start;
+	cursor: pointer;
+	overflow-wrap: anywhere;
+}
+
+.catalog-folder:hover,
+.catalog-folder:focus-visible {
+	border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+	background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+}
+
+.catalog-folder-icon {
+	display: grid;
+	place-items: center;
+	flex: none;
+	width: 2.22rem;
+	height: 2.22rem;
+	border-radius: 0.62rem;
+	color: var(--accent);
+	background: color-mix(in srgb, var(--accent) 11%, transparent);
+}
+
+.catalog-chevron {
+	flex: none;
+	margin-inline-start: auto;
+	color: var(--muted);
+}
+
+.catalog-check-list {
+	display: grid;
+	gap: 0.75rem;
+	padding-bottom: 0.75rem;
+}
+
+.catalog-check-card {
+	padding: 1rem 1.15rem;
+	border: 1px solid var(--border);
+	border-radius: 1rem;
+	background: color-mix(in srgb, var(--surface) 88%, transparent);
+	content-visibility: auto;
+	contain-intrinsic-size: auto 12rem;
+}
+
+.catalog-check-card header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.catalog-check-card h3 {
+	margin: 0.25rem 0;
+	font-size: 1.02rem;
+	line-height: 1.35;
+	font-weight: 650;
+	overflow-wrap: anywhere;
+}
+
+.catalog-check-card dl {
+	margin: 0;
+}
+
+.catalog-check-card dt {
+	margin-top: 0.75rem;
+	font-size: 0.78rem;
+	font-weight: 550;
+	color: var(--muted);
+}
+
+.catalog-check-card dd {
+	margin: 0.15rem 0 0;
+	font-size: 0.9rem;
+	line-height: 1.5;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.catalog-delete,
+.catalog-error {
+	color: var(--danger);
+}
+
+.catalog-dialog {
+	width: min(30rem, calc(100vw - 2.5rem));
+	max-height: calc(100dvh - 3rem);
+}
+
+.catalog-dialog-form {
+	display: grid;
+	gap: 1rem;
+}
+
+.catalog-dialog-form input,
+.catalog-dialog-form textarea {
+	width: 100%;
+}
+
+.catalog-dialog-form textarea {
+	resize: vertical;
+}
+
+.catalog-dialog-description {
+	margin-top: 0;
+}
+
+.catalog-error {
+	font-size: 0.85rem;
+}

@@ -1,0 +1,43 @@
+{
+	"name": "testing-tracker",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"tauri": "tauri",
+		"lint": "oxlint --deny-warnings src vite.config.ts",
+		"format:check": "prettier --check src vite.config.ts index.html package.json tsconfig*.json"
+	},
+	"dependencies": {
+		"@heroui/react": "^3.2.6",
+		"@heroui/styles": "^3.2.6",
+		"@iskala00/react": "0.0.5",
+		"@tanstack/react-query": "^5",
+		"@tauri-apps/api": "^2",
+		"@tauri-apps/plugin-http": "^2",
+		"graphql": "^16",
+		"graphql-ws": "^6",
+		"lucide-react": "^1.50.0",
+		"react": "^19.3.0",
+		"react-aria-components": "^1.22.1",
+		"react-dom": "^19.3.0",
+		"superjson": "^2.2.6",
+		"zustand": "^5"
+	},
+	"devDependencies": {
+		"@tailwindcss/vite": "^4.3.4",
+		"@tauri-apps/cli": "^2",
+		"@types/node": "^26.6.6",
+		"@types/react": "^19.1.8",
+		"@types/react-dom": "^19.1.6",
+		"@vitejs/plugin-react": "^6.0.2",
+		"oxlint": "^1.92.0",
+		"prettier": "^3.9.10",
+		"tailwindcss": "^4.3.4",
+		"typescript": "~6.0.3",
+		"vite": "^8.0.16"
+	}
+}

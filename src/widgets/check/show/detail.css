@@ -1,0 +1,86 @@
+.check-dialog-wrap {
+	max-height: min(85dvh, 850px);
+}
+.check-dialog .modal__header {
+	align-items: flex-start;
+}
+.check-path,
+.thread-muted,
+.thread-record time,
+.thread-record small {
+	color: var(--muted);
+}
+.check-path,
+.thread-record time,
+.thread-record small {
+	font-size: 12px;
+}
+.check-instructions {
+	margin: 0 0 14px;
+	display: grid;
+	gap: 5px;
+	padding: 14px 17px;
+	background: var(--glass-fill, var(--surface));
+	border: 1px solid var(--border);
+	border-radius: 14px;
+}
+.check-instructions dt {
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--muted);
+}
+.check-instructions dd {
+	margin: 0 0 4px;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+.thread-pane {
+	margin-top: 12px;
+}
+.thread-record {
+	margin-block: 10px;
+	padding: 12px 16px;
+	border: 1px solid var(--border);
+	background: var(--glass-fill, var(--surface));
+	border-radius: 15px;
+}
+.thread-record header {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.thread-record header > :last-child {
+	margin-inline-start: auto;
+}
+.thread-record strong {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+.thread-record strong svg {
+	width: 16px;
+	height: 16px;
+}
+.entry-body {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	margin: 5px 0;
+}
+.entry-form {
+	display: grid;
+	gap: 8px;
+}
+.entry-form label {
+	font-weight: 600;
+}
+.entry-form textarea {
+	width: 100%;
+	min-height: 82px;
+	max-height: 270px;
+	resize: vertical;
+}
+.entry-buttons {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}

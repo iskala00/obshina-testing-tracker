@@ -1,0 +1,127 @@
+.run-side {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+	min-height: 0;
+}
+.run-side-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: var(--muted);
+	font-size: 12px;
+	font-weight: 600;
+}
+.run-history-trigger {
+	justify-content: space-between;
+	width: 100%;
+}
+.run-history-trigger span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.run-import {
+	align-self: flex-start;
+}
+.run-history-list {
+	width: min(285px, 75vw);
+	max-height: 310px;
+	overflow-y: auto;
+}
+.history-record {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	text-align: left;
+	border-radius: 10px;
+	padding: 9px 12px;
+}
+.history-record span {
+	display: grid;
+	gap: 3px;
+}
+.history-record small,
+.run-side small {
+	color: var(--muted);
+}
+.history-record:hover {
+	background: color-mix(in srgb, var(--accent) 9%, transparent);
+}
+.run-tree {
+	min-height: 0;
+	overflow: auto;
+	scrollbar-width: thin;
+}
+.run-cat-child {
+	margin-inline-start: 8px;
+}
+.run-cat-all,
+.run-cat-row {
+	width: 100%;
+	min-height: 36px;
+	border-radius: 9px;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 3px 6px;
+}
+.run-cat-all {
+	gap: 9px;
+	padding-inline-start: 10px;
+}
+.run-cat-row:hover,
+.run-cat-all:hover {
+	background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.run-cat-all[data-current='true'],
+.run-cat-row[data-current='true'] {
+	background: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+.run-cat-mark,
+.run-cat-disclose {
+	flex: 0 0 20px;
+	height: 29px;
+	display: grid;
+	place-items: center;
+	border: 0;
+	background: transparent;
+}
+.run-cat-mark svg {
+	width: 16px;
+	color: var(--accent);
+}
+.run-cat-mark[data-failed='true'] svg {
+	color: var(--danger);
+}
+.run-cat-mark:disabled {
+	cursor: default;
+}
+.run-cat-disclose svg {
+	width: 13px;
+	color: var(--muted);
+}
+.run-cat-spacer {
+	width: 20px;
+}
+.run-cat-name {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 5px;
+	text-align: left;
+	min-width: 0;
+	min-height: 28px;
+	padding-right: 3px;
+	font-size: 13px;
+}
+.run-cat-name span {
+	overflow-wrap: anywhere;
+}
+.run-cat-name small {
+	font-size: 10px;
+	font-variant-numeric: tabular-nums;
+}
