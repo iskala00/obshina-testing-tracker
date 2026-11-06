@@ -10,6 +10,9 @@ export function CommunityBrand() {
 	);
 }
 
+// Swift's TideBackdrop draws each band with its own pigment and gradient in canvas coordinates.
+const waveColors = ['#30b0c7', '#32ade6', '#007aff', '#5856d6'];
+
 export function TideBackdrop() {
 	return (
 		<svg
@@ -19,18 +22,27 @@ export function TideBackdrop() {
 			aria-hidden
 		>
 			<defs>
-				<linearGradient id="wave" x1="0%" y1="90%" x2="87%" y2="5%">
-					<stop offset="0" stopColor="currentColor" stopOpacity=".13" />
-					<stop offset="1" stopColor="currentColor" stopOpacity=".58" />
-				</linearGradient>
+				{waveColors.map((color, index) => (
+					<linearGradient
+						key={color}
+						id={`tide-${index}`}
+						gradientUnits="userSpaceOnUse"
+						x1="120"
+						y1="950"
+						x2="860"
+						y2="120"
+					>
+						<stop offset="0" stopColor={color} className="tide-start" />
+						<stop offset="1" stopColor={color} className="tide-end" />
+					</linearGradient>
+				))}
 			</defs>
-			{['#40b6b4', '#35c6ed', '#2989ed', '#6574df'].map((color, index) => (
+			{waveColors.map((color, index) => (
 				<path
 					key={color}
 					transform={`translate(0 ${index * 105})`}
 					d="M -80 540 C 180 440 300 940 540 660 C 760 450 740 120 1080 -120 L 1080 1500 L -80 1500 Z"
-					color={color}
-					fill="url(#wave)"
+					fill={`url(#tide-${index})`}
 					stroke="var(--wave-edge)"
 					strokeWidth="1"
 					vectorEffect="non-scaling-stroke"

@@ -13,9 +13,17 @@
 	top: 0;
 	z-index: 2;
 	display: grid;
-	gap: 7px;
+	gap: 14px;
 	flex: 0 0 auto;
-	padding-block: 5px;
+	padding: 16px 22px;
+	border-radius: 24px;
+	border: 1px solid var(--border);
+	background: var(--glass-sheen), var(--glass-fill);
+	box-shadow:
+		inset 0 1px 0 var(--glass-highlight),
+		0 4px 18px rgb(0 0 0 / 7%);
+	-webkit-backdrop-filter: blur(24px) saturate(1.3);
+	backdrop-filter: blur(24px) saturate(1.3);
 }
 .run-heading {
 	display: flex;
@@ -47,11 +55,7 @@
 	display: flex;
 	align-items: center;
 	gap: 20px;
-	padding: 17px 20px;
-	border-radius: 22px;
-	background: var(--glass-fill, var(--surface));
-	border: 1px solid var(--border);
-	backdrop-filter: blur(22px);
+	min-width: 0;
 }
 .run-summary h2 {
 	font-size: 19px;
@@ -70,6 +74,11 @@
 	width: 64px;
 	height: 64px;
 }
+.run-progress-ring .progress-circle {
+	--progress-circle-track-stroke: color-mix(in srgb, var(--accent) 16%, transparent);
+	--progress-circle-stroke: var(--tab-accent);
+}
+
 .run-progress-ring strong {
 	position: absolute;
 	font-variant-numeric: tabular-nums;
@@ -103,12 +112,32 @@
 .run-filters {
 	width: fit-content;
 	max-width: 100%;
-	padding: 3px;
-	border-radius: 20px;
-	background: var(--glass-fill, var(--surface));
-	backdrop-filter: blur(20px);
 	flex-wrap: wrap;
 	gap: 7px 15px;
+}
+.run-filters .tabs__list-container {
+	border-radius: 999px;
+	background: var(--segment-well);
+}
+.run-filters .tabs__list {
+	padding: 3px;
+	gap: 3px;
+}
+.run-filters .tabs__tab {
+	width: auto;
+	flex: none;
+	white-space: nowrap;
+	height: 28px;
+	padding-inline: 12px;
+	color: var(--foreground);
+	border-radius: 999px;
+}
+.run-filters .tabs__tab[data-selected='true'] {
+	color: white;
+}
+.run-filters .tabs__indicator {
+	background: var(--tab-accent);
+	box-shadow: none;
 }
 .run-results {
 	min-height: 0;
@@ -140,9 +169,11 @@
 }
 .run-card {
 	margin: 0 0 11px;
-	padding: 13px 16px;
-	border-radius: 17px;
-	background: var(--glass-fill, var(--surface));
+	padding: 16px 18px;
+	border-radius: 24px;
+	background: var(--glass-fill);
+	-webkit-backdrop-filter: blur(14px) saturate(1.14);
+	backdrop-filter: blur(14px) saturate(1.14);
 	border: 1px solid var(--border);
 }
 .run-card header {
@@ -230,15 +261,18 @@
 	.run-view {
 		gap: 8px;
 	}
-	.run-summary {
+	.run-tools {
 		padding-block: 10px;
 	}
 }
 
-.run-view[data-compact='true'] .run-summary {
+.run-view[data-compact='true'] .run-tools {
 	padding: 8px 14px;
+	gap: 8px;
+	border-radius: 18px;
+}
+.run-view[data-compact='true'] .run-summary {
 	gap: 12px;
-	border-radius: 15px;
 }
 .run-view[data-compact='true'] .run-summary h2 {
 	font-size: 15px;
@@ -254,7 +288,7 @@
 	height: 44px;
 }
 @media (prefers-reduced-motion: no-preference) {
-	.run-summary,
+	.run-tools,
 	.run-progress-ring,
 	.run-progress-ring svg {
 		transition:
